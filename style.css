@@ -1,0 +1,525 @@
+/* ============================================================
+   TOKENS
+   Concept: night stadium under floodlights + sports trading card.
+   ============================================================ */
+:root{
+  --pitch: #0A1D16;      /* deep night-pitch background */
+  --pitch-2: #0F2A1F;    /* slightly lighter panel wash */
+  --chalk: #F5F8F2;      /* card surface / light text */
+  --ink: #0C1B14;        /* body text on light surfaces */
+  --ink-soft: rgba(12,27,20,0.68);
+  --gold: #FFC145;       /* trophy gold - primary accent */
+  --gold-deep: #E8A317;
+  --action: #FF4B3E;     /* whistle red - CTA / alerts, used sparingly */
+  --court: #2F6FED;      /* electric court blue - secondary accent */
+  --green-grow: #3FCB7E; /* growth green */
+  --line-soft: rgba(245,248,242,0.10);
+  --shadow-hard: 0 10px 0 rgba(0,0,0,0.35);
+  --radius: 20px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(255,193,69,0.16), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 110%, rgba(47,111,237,0.14), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(245,248,242,0.025) 0px, rgba(245,248,242,0.025) 2px, transparent 2px, transparent 26px),
+    var(--pitch);
+  font-family:'Manrope', system-ui, -apple-system, sans-serif;
+  color: var(--chalk);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding: 24px 16px 48px;
+  position:relative;
+  overflow-x:hidden;
+}
+
+.field-glow{
+  position:fixed;
+  top:-200px; left:50%;
+  transform:translateX(-50%);
+  width:900px; height:500px;
+  background: radial-gradient(ellipse at center, rgba(255,193,69,0.10), transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.stage{
+  width:100%;
+  max-width: 460px;
+  position:relative;
+  z-index:1;
+}
+
+/* ============================================================
+   TYPE SCALE — Teko (condensed, scoreboard) + Manrope (body)
+   ============================================================ */
+h1,h2,h3, .display-xl, .display-lg, .display-md{
+  font-family:'Teko', sans-serif;
+  font-weight:600;
+  letter-spacing: 0.3px;
+  line-height: 1.02;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+.display-xl{ font-size: 42px; }
+.display-lg{ font-size: 34px; }
+.display-md{ font-size: 26px; }
+
+.body-text{
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+.body-emph{
+  font-size: 15px;
+  font-weight:700;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:'Manrope', sans-serif;
+  font-weight:800;
+  font-size: 11.5px;
+  letter-spacing: 1.4px;
+  text-transform:uppercase;
+  color: var(--ink);
+  background: var(--chalk);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin-bottom: 14px;
+}
+.eyebrow-gold{ background: var(--gold); }
+.eyebrow-green{ background: var(--green-grow); color:#04150C; }
+.eyebrow-blue{ background: var(--court); color:#F5F8F2; border-color: var(--court); }
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+.screen{ display:none; width:100%; }
+.screen.active{ display:block; }
+
+/* ============================================================
+   CARD — trading-card shell with a cut top-right corner
+   ============================================================ */
+.card{
+  position:relative;
+  background: var(--chalk);
+  color: var(--ink);
+  border-radius: var(--radius) var(--radius) var(--radius) 4px;
+  padding: 30px 24px 26px;
+  box-shadow: var(--shadow-hard);
+  overflow:hidden;
+  margin-bottom: 18px;
+}
+.corner-cut{
+  position:absolute;
+  top:0; right:0;
+  width:0; height:0;
+  border-style: solid;
+  border-width: 0 46px 46px 0;
+  border-color: transparent var(--gold) transparent transparent;
+  z-index:2;
+}
+
+/* ============================================================
+   HOME
+   ============================================================ */
+.home-card .tagline{
+  font-family:'Teko', sans-serif;
+  font-size: 21px;
+  font-weight:600;
+  color: var(--gold-deep);
+  margin: 0 0 14px;
+}
+.promise-list{
+  list-style:none;
+  margin: 4px 0 24px;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.promise-list li{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size: 14.5px;
+  font-weight:600;
+  background: rgba(47,111,237,0.08);
+  border: 1.5px solid rgba(12,27,20,0.10);
+  border-radius: 10px;
+  padding: 9px 12px;
+}
+.promise-icon{ font-size: 18px; flex:0 0 auto; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  font-family:'Teko', sans-serif;
+  font-size: 22px;
+  font-weight:600;
+  letter-spacing:0.5px;
+  border-radius: 12px;
+  padding: 13px 22px;
+  width:100%;
+  cursor:pointer;
+  border: 3px solid var(--ink);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, opacity 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-primary{
+  background: var(--gold);
+  color: var(--ink);
+  box-shadow: 0 6px 0 var(--gold-deep);
+}
+.btn-primary:active{ transform: translateY(4px); box-shadow: 0 2px 0 var(--gold-deep); }
+.btn-primary:disabled{ opacity:0.4; cursor:not-allowed; box-shadow:none; transform:none; }
+.btn-secondary{
+  background: var(--court);
+  color: var(--chalk);
+  border-color: var(--court);
+  box-shadow: 0 6px 0 #1B4FBE;
+}
+.btn-secondary:active{ transform: translateY(4px); box-shadow: 0 2px 0 #1B4FBE; }
+.btn-ghost{
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(12,27,20,0.25);
+  box-shadow:none;
+}
+.btn-ghost:active{ transform: translateY(2px); }
+
+.quiz-nav{ display:flex; gap:10px; margin-top: 20px; }
+.quiz-nav .btn-ghost{ flex: 0 0 34%; }
+.quiz-nav .btn-primary{ flex:1; }
+
+.restart-row{ margin: 6px 0 18px; }
+
+/* ============================================================
+   QUIZ
+   ============================================================ */
+.scoreboard{ margin-bottom: 20px; }
+.scoreboard-row{
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  font-family:'Teko', sans-serif;
+  margin-bottom:8px;
+}
+.scoreboard-label{
+  font-size: 13px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color: var(--ink-soft);
+  font-family:'Manrope',sans-serif;
+}
+.scoreboard-number{
+  font-size: 30px;
+  font-weight:700;
+  color: var(--gold-deep);
+  margin-left:2px;
+}
+.scoreboard-of{
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+.progress-track{
+  position:relative;
+  height: 10px;
+  background: rgba(12,27,20,0.10);
+  border-radius: 999px;
+  overflow:visible;
+}
+.progress-fill{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg, var(--gold), var(--action));
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+.progress-marker{
+  position:absolute;
+  top:50%;
+  left:0%;
+  transform: translate(-50%,-50%);
+  font-size: 18px;
+  transition: left 0.35s ease;
+}
+
+.question-text{
+  font-size: 27px;
+  margin: 4px 0 18px;
+}
+.options{ display:flex; flex-direction:column; gap:10px; }
+.option{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-align:left;
+  font-family:'Manrope', sans-serif;
+  font-weight:600;
+  font-size: 14.5px;
+  color: var(--ink);
+  background: #fff;
+  border: 2px solid rgba(12,27,20,0.14);
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor:pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, transform 0.08s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.option:hover{ border-color: var(--court); }
+.option:active{ transform: scale(0.99); }
+.option.selected{
+  background: rgba(255,193,69,0.16);
+  border-color: var(--gold-deep);
+}
+.option .letter{
+  flex:0 0 auto;
+  width: 26px; height:26px;
+  border-radius:50%;
+  background: var(--ink);
+  color: var(--chalk);
+  font-family:'Teko', sans-serif;
+  font-size:15px;
+  font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+.option.selected .letter{ background: var(--gold-deep); color: var(--ink); }
+
+/* ============================================================
+   CALCOLO
+   ============================================================ */
+.calc-card{ text-align:center; padding-top:44px; padding-bottom:40px; }
+.spinner{
+  width: 54px; height:54px;
+  margin: 0 auto 22px;
+  border-radius:50%;
+  border: 6px solid rgba(12,27,20,0.12);
+  border-top-color: var(--gold-deep);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin{ to{ transform: rotate(360deg); } }
+
+/* ============================================================
+   RESULT — PLAYER CARD (signature element)
+   ============================================================ */
+.player-card{
+  background: linear-gradient(155deg, #FFFDF7 0%, var(--chalk) 55%, #FDF3DD 100%);
+  border: 2px solid rgba(255,193,69,0.5);
+}
+.player-card-header{ margin-bottom: 8px; }
+.athlete-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom: 4px;
+}
+.athlete-emoji{
+  font-size: 26px;
+  width: 44px; height:44px;
+  display:flex; align-items:center; justify-content:center;
+  background: var(--ink);
+  border-radius:50%;
+}
+.athlete-name{
+  font-family:'Teko', sans-serif;
+  font-size: 19px;
+  font-weight:600;
+  color: var(--ink-soft);
+  letter-spacing:0.3px;
+}
+.power-name{ font-size: 50px; margin-bottom:4px; }
+.keywords{
+  font-family:'Manrope',sans-serif;
+  font-size: 12px;
+  font-weight:800;
+  letter-spacing: 1.6px;
+  color: var(--gold-deep);
+  margin: 0 0 16px;
+}
+.section-label{
+  font-family:'Manrope', sans-serif;
+  font-size: 12.5px;
+  font-weight:800;
+  letter-spacing: 1px;
+  text-transform:uppercase;
+  color: var(--ink);
+  margin: 4px 0 10px;
+}
+.stat-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:8px;
+  margin-bottom: 20px;
+}
+.stat-chip{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background: rgba(12,27,20,0.05);
+  border: 1.5px solid rgba(12,27,20,0.10);
+  border-radius: 10px;
+  padding: 10px 10px;
+  font-size: 13px;
+  font-weight:700;
+  line-height:1.25;
+}
+.stat-chip .stat-icon{ font-size:17px; flex:0 0 auto; }
+
+.motto-ribbon{
+  position:relative;
+  background: var(--ink);
+  color: var(--chalk);
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-align:center;
+}
+.motto-label{
+  display:block;
+  font-family:'Manrope', sans-serif;
+  font-size: 10.5px;
+  font-weight:800;
+  letter-spacing: 1.6px;
+  text-transform:uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.motto-text{
+  font-family:'Teko', sans-serif;
+  font-size: 22px;
+  font-weight:600;
+  letter-spacing:0.4px;
+}
+
+/* ============================================================
+   GROWTH CARD
+   ============================================================ */
+.growth-card{
+  background: linear-gradient(155deg, #FFFFFF 0%, var(--chalk) 100%);
+  border: 2px solid rgba(63,203,126,0.4);
+}
+.growth-card .display-lg{ font-size:34px; }
+.action-list{
+  list-style:none;
+  margin:0; padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.action-list li{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size: 14px;
+  font-weight:600;
+  background: rgba(63,203,126,0.08);
+  border: 1.5px solid rgba(63,203,126,0.25);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* ============================================================
+   AREAS
+   ============================================================ */
+.areas-card{ border: 2px solid rgba(47,111,237,0.35); }
+.areas-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin: 4px 0 18px;
+}
+.area-pill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background: rgba(47,111,237,0.08);
+  border: 1.5px solid rgba(47,111,237,0.25);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family:'Teko', sans-serif;
+  font-size: 19px;
+  font-weight:600;
+  color: var(--ink);
+}
+.area-pill .area-emoji{ font-size:20px; }
+
+.areas-detail-card{ border: 2px solid rgba(47,111,237,0.35); }
+.area-detail-block{
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1.5px dashed rgba(12,27,20,0.12);
+}
+.area-detail-block:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.area-detail-title{
+  font-family:'Teko', sans-serif;
+  font-size: 26px;
+  font-weight:600;
+  margin-bottom: 2px;
+}
+.area-detail-keywords{
+  font-family:'Manrope',sans-serif;
+  font-size: 11px;
+  font-weight:800;
+  letter-spacing: 1.4px;
+  color: var(--court);
+  margin-bottom: 10px;
+}
+.area-bullets{
+  list-style:none;
+  margin: 0; padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.area-bullets li{
+  font-size: 13.5px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* ============================================================
+   SCREENSHOT
+   ============================================================ */
+.screenshot-card{ text-align:left; border: 2px solid rgba(255,193,69,0.5); }
+
+/* ============================================================
+   DISCLAIMER
+   ============================================================ */
+.disclaimer{
+  font-size: 11.5px;
+  line-height:1.5;
+  color: rgba(245,248,242,0.55);
+  text-align:center;
+  padding: 0 8px;
+}
+
+/* ============================================================
+   ACCESSIBILITY / MOTION
+   ============================================================ */
+.btn:focus-visible, .option:focus-visible{
+  outline: 3px solid var(--court);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce){
+  .btn, .option, .progress-fill, .progress-marker, .spinner{ transition:none; animation:none; }
+}
+@media (max-width: 360px){
+  .display-xl{ font-size: 36px; }
+  .power-name{ font-size: 42px; }
+}

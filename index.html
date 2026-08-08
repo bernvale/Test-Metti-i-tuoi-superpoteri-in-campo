@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Scopri il super potere che puoi mettere in campo</title>
+<meta name="description" content="12 sfide, 10 campioni: scopri il tuo super potere e i mondi professionali da esplorare.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="field-glow"></div>
+
+<main class="stage">
+
+  <!-- ============ HOME ============ -->
+  <section class="screen" id="screen-home">
+    <div class="card home-card">
+      <div class="corner-cut"></div>
+      <span class="eyebrow">Test di orientamento in gioco</span>
+      <h1 class="display-xl">Scopri il super potere<br>che puoi mettere in campo</h1>
+      <p class="tagline">12 sfide. 10 campioni. Qual è il tuo modo di fare la differenza?</p>
+      <p class="body-text"><strong>Non serve essere sportivi!</strong> Immagina di trovarti nelle situazioni che seguono e scegli ogni volta la risposta che ti assomiglia di più. Non esistono risposte giuste o sbagliate.</p>
+      <p class="body-emph">Non pensarci troppo. Scegli d'istinto!</p>
+
+      <ul class="promise-list">
+        <li><span class="promise-icon">🏆</span> Il super potere che puoi mettere in campo</li>
+        <li><span class="promise-icon">🌱</span> Il super potere che puoi far fiorire</li>
+        <li><span class="promise-icon">🧭</span> Alcuni mondi professionali da esplorare</li>
+      </ul>
+
+      <button class="btn btn-primary" id="btn-start">Inizia la sfida →</button>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="screen" id="screen-quiz">
+    <div class="card quiz-card">
+      <div class="corner-cut"></div>
+      <div class="scoreboard">
+        <div class="scoreboard-row">
+          <span class="scoreboard-label">Domanda</span>
+          <span class="scoreboard-number" id="q-number">01</span>
+          <span class="scoreboard-of">/ 12</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+          <div class="progress-marker" id="progress-marker">⚽</div>
+        </div>
+      </div>
+
+      <h2 class="question-text" id="question-text"></h2>
+      <div class="options" id="options-container"></div>
+
+      <div class="quiz-nav">
+        <button class="btn btn-ghost" id="btn-prev">← Indietro</button>
+        <button class="btn btn-primary" id="btn-next" disabled>Avanti →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CALCOLO ============ -->
+  <section class="screen" id="screen-calc">
+    <div class="card calc-card">
+      <div class="corner-cut"></div>
+      <div class="spinner" aria-hidden="true"></div>
+      <h2 class="display-md">Stiamo leggendo<br>il tuo campo...</h2>
+      <p class="body-text">Mettiamo insieme le tue 12 scelte...</p>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section class="screen" id="screen-result">
+
+    <!-- 1. PLAYER CARD: SUPERPOTERE -->
+    <div class="card player-card" id="player-card">
+      <div class="corner-cut"></div>
+      <div class="player-card-header">
+        <span class="eyebrow eyebrow-gold">🏆 Il super potere che puoi mettere in campo</span>
+      </div>
+      <div class="athlete-row">
+        <span class="athlete-emoji" id="pc-athlete-emoji">⚽</span>
+        <span class="athlete-name" id="pc-athlete-name">Lionel Messi</span>
+      </div>
+      <h2 class="display-xl power-name" id="pc-power-name">Fantasia</h2>
+      <p class="keywords" id="pc-keywords">CREATIVITÀ • IDEE • ORIGINALITÀ</p>
+      <p class="body-text" id="pc-description"></p>
+
+      <h3 class="section-label">🔝 Dove sei il top</h3>
+      <div class="stat-grid" id="pc-top-grid"></div>
+
+      <div class="motto-ribbon">
+        <span class="motto-label">Il tuo motto</span>
+        <span class="motto-text" id="pc-motto"></span>
+      </div>
+    </div>
+
+    <!-- 2. SUPERPOTERE DA FAR FIORIRE -->
+    <div class="card growth-card">
+      <div class="corner-cut"></div>
+      <span class="eyebrow eyebrow-green">🌱 Il super potere che puoi far fiorire</span>
+      <div class="athlete-row">
+        <span class="athlete-emoji" id="gc-athlete-emoji">🎾</span>
+        <span class="athlete-name" id="gc-athlete-name">Jannik Sinner</span>
+      </div>
+      <h2 class="display-lg" id="gc-power-name">Tenacia</h2>
+      <p class="body-text" id="gc-description"></p>
+      <h3 class="section-label">Fallo fiorire così</h3>
+      <ul class="action-list" id="gc-actions"></ul>
+    </div>
+
+    <!-- 3. AREE PROFESSIONALI -->
+    <div class="card areas-card">
+      <div class="corner-cut"></div>
+      <span class="eyebrow eyebrow-blue">🧭 Dove potresti metterlo in campo?</span>
+      <div class="areas-list" id="areas-list"></div>
+      <p class="body-text">Le tue risposte fanno emergere alcuni mondi professionali che potrebbe essere interessante esplorare.</p>
+      <p class="body-text"><strong>Non sono strade già decise per te. Sono direzioni da conoscere, esplorare e mettere alla prova.</strong></p>
+      <button class="btn btn-secondary" id="btn-discover-areas">🔎 Scopri cosa si fa in queste aree</button>
+    </div>
+
+    <!-- 4. DESCRIZIONE AREE (toggled) -->
+    <div class="card areas-detail-card" id="areas-detail-card" hidden>
+      <div class="corner-cut"></div>
+      <span class="eyebrow eyebrow-blue">Le tue 3 aree da esplorare</span>
+      <div id="areas-detail-list"></div>
+    </div>
+
+    <!-- 5. SCREENSHOT -->
+    <div class="card screenshot-card">
+      <div class="corner-cut"></div>
+      <span class="eyebrow eyebrow-gold">📸 Porta con te i tuoi super poteri</span>
+      <h3 class="display-md">Fai uno screenshot<br>della tua card</h3>
+      <p class="body-text">Conservala sul telefono. Ti ricorderà:</p>
+      <ul class="promise-list">
+        <li><span class="promise-icon">🏆</span> il super potere che puoi mettere in campo</li>
+        <li><span class="promise-icon">🌱</span> il super potere che puoi far fiorire</li>
+        <li><span class="promise-icon">🔝</span> dove sei il TOP</li>
+        <li><span class="promise-icon">🧭</span> tre mondi professionali da esplorare</li>
+      </ul>
+      <p class="body-emph">E davanti alla prossima sfida chiediti:<br>"Quale super potere posso mettere in campo?"</p>
+    </div>
+
+    <!-- 6. RESTART -->
+    <div class="restart-row">
+      <button class="btn btn-ghost" id="btn-restart">🔄 Rifai il test</button>
+    </div>
+
+    <p class="disclaimer">Questo gioco è uno strumento di orientamento e riflessione personale. Non è un test psicologico né una valutazione delle competenze. Le aree professionali proposte sono spunti da esplorare e non indicazioni sulla scelta di studi o carriera.</p>
+
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
