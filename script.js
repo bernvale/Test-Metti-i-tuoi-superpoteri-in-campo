@@ -571,6 +571,13 @@ function renderResult(){
       '<ul class="area-bullets">' + bulletsHtml + '</ul>';
     detailListEl.appendChild(block);
   });
+
+  /* -- summary recap card -- */
+  document.getElementById('sc-power-name').textContent = power.name;
+  document.getElementById('sc-power-athlete').textContent = power.athlete;
+  document.getElementById('sc-growth-name').textContent = growthPower.name;
+  document.getElementById('sc-growth-athlete').textContent = growthPower.athlete;
+  document.getElementById('sc-areas').textContent = areaObjs.map(a => a.name).join(' • ');
 }
 
 /* ============================================================
