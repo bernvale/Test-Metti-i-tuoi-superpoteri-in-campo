@@ -592,6 +592,24 @@ document.getElementById('btn-discover-areas').addEventListener('click', function
   }
 });
 
+/* ============================================================
+   16. QR CODE — encodes the page's own live URL, so it always
+   points to wherever this site is actually deployed.
+   ============================================================ */
+function renderHomeQR(){
+  const box = document.getElementById('home-qr');
+  if (!box || typeof qrcode !== 'function') return;
+  try {
+    const qr = qrcode(0, 'M');
+    qr.addData(window.location.href);
+    qr.make();
+    box.innerHTML = qr.createSvgTag(4, 8);
+  } catch (e){
+    box.remove(); // fail silently if generation ever breaks; link/button still works
+  }
+}
+renderHomeQR();
+
 showScreen('home');
 
 })();

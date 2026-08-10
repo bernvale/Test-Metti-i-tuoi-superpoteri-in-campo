@@ -33,6 +33,11 @@
       </ul>
 
       <button class="btn btn-primary" id="btn-start">Inizia la sfida →</button>
+
+      <div class="qr-block">
+        <p class="qr-label">...oppure fai inquadrare questo QR code a chi vuoi far giocare</p>
+        <div class="qr-box" id="home-qr" aria-label="QR code per aprire il gioco"></div>
+      </div>
     </div>
   </section>
 
@@ -48,7 +53,7 @@
         </div>
         <div class="progress-track">
           <div class="progress-fill" id="progress-fill"></div>
-          <div class="progress-marker" id="progress-marker">⚽</div>
+          <div class="progress-marker" id="progress-marker">🪄</div>
         </div>
       </div>
 
@@ -130,17 +135,25 @@
     </div>
 
     <!-- 5. SCREENSHOT -->
-    <div class="card screenshot-card">
-      <div class="corner-cut"></div>
-      <span class="eyebrow eyebrow-gold">📷 Porta con te i tuoi super poteri</span>
-      <h3 class="display-md">Fai uno screenshot<br>della tua card</h3>
-      <p class="body-text">Conservala sul telefono. Ti ricorderà:</p>
-      <ul class="promise-list">
-        <li><span class="promise-icon">💎</span> il super potere che puoi mettere in campo</li>
-        <li><span class="promise-icon">🌱</span> il super potere che puoi far fiorire</li>
-        <li><span class="promise-icon">💼</span> tre mondi professionali da esplorare</li>
-      </ul>
-      <p class="body-emph">E davanti alla prossima sfida chiediti:<br>"Quale super potere posso mettere in campo?"</p>
+    <div class="screenshot-card-wrap">
+      <div class="camera-pop" aria-hidden="true">
+        <span class="camera-glow"></span>
+        <span class="camera-sparkle camera-sparkle-1">✨</span>
+        <span class="camera-sparkle camera-sparkle-2">✨</span>
+        <span class="camera-emoji">📸</span>
+      </div>
+      <div class="card screenshot-card">
+        <div class="corner-cut"></div>
+        <span class="eyebrow eyebrow-gold">Porta con te i tuoi super poteri</span>
+        <h3 class="display-md">Fai uno screenshot<br>della tua card</h3>
+        <p class="body-text">Conservala sul telefono. Ti ricorderà:</p>
+        <ul class="promise-list">
+          <li><span class="promise-icon">💎</span> il super potere che puoi mettere in campo</li>
+          <li><span class="promise-icon">🌱</span> il super potere che puoi far fiorire</li>
+          <li><span class="promise-icon">💼</span> tre mondi professionali da esplorare</li>
+        </ul>
+        <p class="body-emph">Hai delle ottime qualità, coltivale e allenale sia nella scuola che nel lavoro. E, soprattutto, continua a imparare sempre!</p>
+      </div>
     </div>
 
     <!-- 6. RESTART -->
@@ -154,6 +167,7 @@
 
 </main>
 
+<script src="qrcode.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

@@ -7,15 +7,23 @@ Tutta la logica di calcolo gira **localmente nel browser**: nessun dato lascia m
 ## File
 
 ```
-index.html   → struttura della pagina
-style.css    → stile "sport × player card × videogame"
-script.js    → domande, doppio scoring, calibrazione, rendering
+index.html    → struttura della pagina
+style.css     → stile "sport × player card × videogame"
+script.js     → domande, doppio scoring, calibrazione, rendering
+qrcode.js     → libreria open source (MIT, Kazuhiko Arase) per generare il QR code
 ```
+
+## Accesso al gioco
+
+Il gioco è raggiungibile in due modi, che convivono senza bisogno di alcuna configurazione:
+
+- **Link diretto**: una volta pubblicato, l'indirizzo del sito (es. `https://tuo-username.github.io/nome-repo/`) è un normale link condivisibile via email, WhatsApp, SMS o qualsiasi altro canale.
+- **QR code**: nella schermata iniziale del gioco è presente un QR code generato automaticamente dal browser stesso, che punta sempre all'indirizzo esatto su cui il sito sta girando in quel momento — anche se in futuro lo pubblichi altrove, il QR si aggiorna da solo senza bisogno di rigenerarlo.
 
 ## Come pubblicarlo su GitHub Pages
 
 1. Crea un nuovo repository pubblico su GitHub.
-2. Carica **tutti e tre i file** (`index.html`, `style.css`, `script.js`) nella cartella principale (root) del repository — non dentro una sottocartella.
+2. Carica **tutti e quattro i file** (`index.html`, `style.css`, `script.js`, `qrcode.js`) nella cartella principale (root) del repository — non dentro una sottocartella.
 3. Vai su `Settings` → `Pages` → in "Source" scegli **Deploy from a branch**, branch `main`, cartella `/ (root)` → Save.
 4. Dopo 1-2 minuti troverai il link pubblico in cima a quella stessa pagina, del tipo:
    ```
