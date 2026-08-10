@@ -11,6 +11,7 @@ index.html    → struttura della pagina
 style.css     → stile "sport × player card × videogame"
 script.js     → domande, doppio scoring, calibrazione, rendering
 qrcode.js     → libreria open source (MIT, Kazuhiko Arase) per generare il QR code
+ei-logo.png   → logo Eurointerim, mostrato in alto a destra su ogni card
 ```
 
 ## Accesso al gioco
@@ -23,7 +24,7 @@ Il gioco è raggiungibile in due modi, che convivono senza bisogno di alcuna con
 ## Come pubblicarlo su GitHub Pages
 
 1. Crea un nuovo repository pubblico su GitHub.
-2. Carica **tutti e quattro i file** (`index.html`, `style.css`, `script.js`, `qrcode.js`) nella cartella principale (root) del repository — non dentro una sottocartella.
+2. Carica **tutti e cinque i file** (`index.html`, `style.css`, `script.js`, `qrcode.js`, `ei-logo.png`) nella cartella principale (root) del repository — non dentro una sottocartella.
 3. Vai su `Settings` → `Pages` → in "Source" scegli **Deploy from a branch**, branch `main`, cartella `/ (root)` → Save.
 4. Dopo 1-2 minuti troverai il link pubblico in cima a quella stessa pagina, del tipo:
    ```
