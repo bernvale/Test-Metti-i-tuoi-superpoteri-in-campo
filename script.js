@@ -450,27 +450,16 @@ function calibrateAreaScores(raw){
 }
 
 /* ============================================================
-   12. AREA SELECTION — coherent with the main superpower
-   2 of 3 areas always come from the primary superpower's
-   affinity pool; the 3rd slot can borrow from the growth
-   power's pool when the person's answers point clearly that way.
+   12. AREA SELECTION — always coherent with the main superpower.
+   The 3 areas are the top-scoring ones (by the person's actual
+   answers) drawn exclusively from the primary superpower's
+   5-area affinity pool, so the result is always thematically
+   consistent while still being personalized.
    ============================================================ */
-function selectRecommendedAreas(final, powerCode, growthCode){
+function selectRecommendedAreas(final, powerCode){
   const primaryPool = AREA_AFFINITY[powerCode].areas;
-  const growthPool = AREA_AFFINITY[growthCode].areas.filter(c => !primaryPool.includes(c));
-
-  const rankedPrimary = primaryPool.slice().sort((a,b) => final[b] - final[a]);
-  const rankedGrowth = growthPool.slice().sort((a,b) => final[b] - final[a]);
-
-  const selected = rankedPrimary.slice(0, 2);
-
-  const thirdSlotCandidates = [...rankedPrimary.slice(2), ...rankedGrowth]
-    .sort((a,b) => final[b] - final[a]);
-
-  if (thirdSlotCandidates.length){
-    selected.push(thirdSlotCandidates[0]);
-  }
-  return selected;
+  const ranked = primaryPool.slice().sort((a,b) => final[b] - final[a]);
+  return ranked.slice(0, 3);
 }
 
 /* ============================================================
@@ -509,7 +498,7 @@ function renderResult(){
   const dimNorm = normalizeDimensions(dimTotals);
   const areaRaw = calculateAreaScores(dimNorm);
   const areaFinal = calibrateAreaScores(areaRaw);
-  const topAreaCodes = selectRecommendedAreas(areaFinal, powerCode, growthCode);
+  const topAreaCodes = selectRecommendedAreas(areaFinal, powerCode);
 
   /* -- player card -- */
   document.getElementById('pc-athlete-emoji').textContent = power.athleteEmoji;

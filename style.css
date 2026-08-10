@@ -548,7 +548,7 @@ h1,h2,h3, .display-xl, .display-lg, .display-md{
 .screenshot-card-wrap{
   position:relative;
   margin-bottom: 18px;
-  padding-top: 30px;
+  padding-top: 84px;
 }
 .screenshot-card{ margin-bottom:0; border: 2px solid rgba(255,193,69,0.5); }
 .brand-signoff{
@@ -617,6 +617,14 @@ h1,h2,h3, .display-xl, .display-lg, .display-md{
   font-size: 12px;
   font-weight:600;
   color: var(--ink-soft);
+}
+.recap-stars{
+  margin-left:auto;
+  flex:0 0 auto;
+  font-size: 15px;
+  letter-spacing: 1px;
+  white-space:nowrap;
+  padding-left: 8px;
 }
 .camera-pop{
   position:absolute;
