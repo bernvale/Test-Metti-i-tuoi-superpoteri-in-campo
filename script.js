@@ -241,7 +241,26 @@ const AREAS = [
 ];
 
 /* ============================================================
-   6. CALIBRATION — Z = (raw - mean) / sd ; final = Z + correction
+   6b. AREA AFFINITY — coherence pools per superpower.
+   The 3 recommended areas are drawn primarily from the main
+   superpower's pool, with the growth-power's pool only used as
+   an optional "flavor" for the 3rd slot when it scores higher.
+   ============================================================ */
+const AREA_AFFINITY = {
+  ME:{ areas:["DES","MKT","ENG","IT","PM"] },
+  SI:{ areas:["OPS","QUA","SCM","PRO","ENG"] },
+  AL:{ areas:["MKT","PM","CUS","DES","SAL"] },
+  OR:{ areas:["PM","SAL","OPS","SCM","HR"] },
+  PE:{ areas:["QUA","FIN","LEG","ADM","ENG"] },
+  BV:{ areas:["MKT","HR","CUS","SAL","PM"] },
+  EG:{ areas:["SAL","HR","PM","MKT","CUS"] },
+  GO:{ areas:["SAL","PRO","IT","ENG","PM"] },
+  VR:{ areas:["MKT","SAL","DES","HR","CUS"] },
+  CR:{ areas:["ADM","FIN","LEG","OPS","QUA"] },
+};
+
+/* ============================================================
+   6c. CALIBRATION — Z = (raw - mean) / sd ; final = Z + correction
    ============================================================ */
 const CALIBRATION = {
   HR:  { mean:0.276157, sd:0.038659, correction:0.081617 },
@@ -431,34 +450,27 @@ function calibrateAreaScores(raw){
 }
 
 /* ============================================================
-   12. AREA SELECTION — top area + family-diversity rule
+   12. AREA SELECTION — coherent with the main superpower
+   2 of 3 areas always come from the primary superpower's
+   affinity pool; the 3rd slot can borrow from the growth
+   power's pool when the person's answers point clearly that way.
    ============================================================ */
-function selectRecommendedAreas(final){
-  const areaByCode = {};
-  AREAS.forEach(a => areaByCode[a.code] = a);
+function selectRecommendedAreas(final, powerCode, growthCode){
+  const primaryPool = AREA_AFFINITY[powerCode].areas;
+  const growthPool = AREA_AFFINITY[growthCode].areas.filter(c => !primaryPool.includes(c));
 
-  const sorted = AREAS.map(a => ({ code:a.code, score:final[a.code], family:a.family }))
-                       .sort((a,b) => b.score - a.score);
+  const rankedPrimary = primaryPool.slice().sort((a,b) => final[b] - final[a]);
+  const rankedGrowth = growthPool.slice().sort((a,b) => final[b] - final[a]);
 
-  const selected = [sorted[0]];
-  const usedFamilies = new Set([sorted[0].family]);
+  const selected = rankedPrimary.slice(0, 2);
 
-  for (let pick = 0; pick < 2; pick++){
-    const remaining = sorted.filter(x => !selected.includes(x));
-    let best = remaining[0];
+  const thirdSlotCandidates = [...rankedPrimary.slice(2), ...rankedGrowth]
+    .sort((a,b) => final[b] - final[a]);
 
-    if (usedFamilies.has(best.family) && best.family !== 'CROSS'){
-      const diverse = remaining.filter(x => !usedFamilies.has(x.family));
-      for (const cand of diverse){
-        const relDiff = Math.abs(best.score - cand.score) / Math.max(Math.abs(best.score), 1e-6);
-        if (relDiff <= 0.05){ best = cand; break; }
-      }
-    }
-    selected.push(best);
-    usedFamilies.add(best.family);
+  if (thirdSlotCandidates.length){
+    selected.push(thirdSlotCandidates[0]);
   }
-
-  return selected.map(s => s.code);
+  return selected;
 }
 
 /* ============================================================
@@ -497,7 +509,7 @@ function renderResult(){
   const dimNorm = normalizeDimensions(dimTotals);
   const areaRaw = calculateAreaScores(dimNorm);
   const areaFinal = calibrateAreaScores(areaRaw);
-  const topAreaCodes = selectRecommendedAreas(areaFinal);
+  const topAreaCodes = selectRecommendedAreas(areaFinal, powerCode, growthCode);
 
   /* -- player card -- */
   document.getElementById('pc-athlete-emoji').textContent = power.athleteEmoji;

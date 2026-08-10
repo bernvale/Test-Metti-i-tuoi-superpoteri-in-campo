@@ -25,19 +25,22 @@ script.js    → domande, doppio scoring, calibrazione, rendering
 
 ## Come funziona il calcolo (in breve)
 
-Ogni risposta alle 12 domande alimenta **due sistemi di punteggio indipendenti e invisibili**:
+Ogni risposta alle 12 domande alimenta **due sistemi di punteggio**:
 
 1. **10 super poteri** (Fantasia, Tenacia, Versatilità, Strategia, Concentrazione, Comunicazione, Impatto, Coraggio, Intuito, Disciplina) — ognuno associato a un campione o una campionessa. Vince quello con il punteggio più alto; in caso di parità si applicano le regole di spareggio descritte nella specifica (più risposte "primarie", poi la risposta alla domanda 12, poi estrazione casuale).
 
-2. **8 dimensioni professionali nascoste** (Persone, Analisi, Creatività, Organizzazione, Tecnica, Decisione, Regole, Esplorazione) → normalizzate → proiettate su **15 aree aziendali** tramite pesi dedicati → calibrate con una formula statistica (z-score + correzione) tarata per restituire una distribuzione equilibrata tra le 15 aree → selezionate le 3 aree finali, privilegiando varietà tra "famiglie" professionali diverse quando i punteggi sono molto vicini.
+2. **8 dimensioni professionali nascoste** (Persone, Analisi, Creatività, Organizzazione, Tecnica, Decisione, Regole, Esplorazione) → normalizzate → proiettate su **15 aree aziendali** tramite pesi dedicati → calibrate con una formula statistica (z-score + correzione).
 
-Il secondo sistema è del tutto indipendente dal primo: due persone con lo stesso super potere possono ricevere aree professionali diverse.
+**Selezione delle 3 aree finali (aggiornata per coerenza tematica):** a differenza della prima versione — dove le aree erano scelte in modo completamente indipendente dal super potere — ora le 3 aree proposte vengono scelte così:
+- ogni super potere ha un **pool di 5 aree affini** per tema (es. Versatilità → IT & Digital, Project Management, Customer Service, Design & Product, Commerciale)
+- le **prime 2 aree** vengono sempre scelte da quel pool, prendendo le due con il punteggio calibrato più alto in base alle risposte effettive
+- la **terza area** può ancora venire dal pool del super potere primario, oppure — solo se il punteggio calcolato dalle risposte lo indica chiaramente — dal pool del "super potere da far fiorire" (il talento secondario), aggiungendo una sfumatura coerente ma personalizzata
 
-**Verifica effettuata:** ho testato la logica con 20.000 simulazioni casuale delle 12 risposte. La distribuzione dei super poteri risulta equilibrata (~8,5%-11,7% ciascuno su 10 profili, atteso ~10%) e la distribuzione della prima area professionale risulta anch'essa equilibrata (~6,1%-7,0% su 15 aree, atteso ~6,7%), in linea con quanto previsto dalla specifica.
+Questo garantisce che il risultato sia sempre tematicamente coerente con il super potere principale, pur restando personalizzato in base alle risposte effettive di ciascuno.
 
 ## Personalizzare i contenuti
 
-Tutti i testi (domande, risposte, player card, descrizioni delle aree) sono in `script.js`, organizzati in blocchi chiaramente commentati all'inizio del file (`QUESTIONS`, `POWERS`, `GROWTH_TEXT`, `AREAS`). Le formule di calcolo (`CALIBRATION`, pesi delle aree) sono più sotto e vanno toccate solo se si vuole ricalibrare il sistema.
+Tutti i testi (domande, risposte, player card, descrizioni delle aree) sono in `script.js`, organizzati in blocchi chiaramente commentati all'inizio del file (`QUESTIONS`, `POWERS`, `GROWTH_TEXT`, `AREAS`, `AREA_AFFINITY`). Le formule di calcolo (`CALIBRATION`, pesi delle aree) sono più sotto e vanno toccate solo se si vuole ricalibrare il sistema. Per cambiare quali aree sono affini a un super potere, modifica l'oggetto `AREA_AFFINITY`.
 
 ## Privacy
 
