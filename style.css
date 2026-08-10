@@ -122,6 +122,9 @@ h1,h2,h3, .display-xl, .display-lg, .display-md{
   overflow:hidden;
   margin-bottom: 18px;
 }
+.home-card, .player-card, .growth-card, .areas-card, .areas-detail-card, .screenshot-card{
+  text-align:center;
+}
 .corner-cut{
   position:absolute;
   top:0; right:0;
@@ -213,6 +216,11 @@ h1,h2,h3, .display-xl, .display-lg, .display-md{
 .quiz-nav .btn-ghost{ width:auto; padding: 10px 26px; font-size:18px; }
 
 .restart-row{ margin: 6px 0 18px; }
+.restart-row .btn-ghost{
+  color: var(--chalk);
+  border-color: rgba(245,248,242,0.35);
+}
+.restart-row .btn-ghost:hover{ border-color: rgba(245,248,242,0.6); }
 
 /* ============================================================
    QUIZ
@@ -332,6 +340,7 @@ h1,h2,h3, .display-xl, .display-lg, .display-md{
 .athlete-row{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:10px;
   margin-bottom: 4px;
 }
@@ -501,9 +510,59 @@ h1,h2,h3, .display-xl, .display-lg, .display-md{
 }
 
 /* ============================================================
-   SCREENSHOT
+   SCREENSHOT — pop-out camera special effect
    ============================================================ */
-.screenshot-card{ text-align:left; border: 2px solid rgba(255,193,69,0.5); }
+.screenshot-card-wrap{
+  position:relative;
+  margin-bottom: 18px;
+  padding-top: 30px;
+}
+.screenshot-card{ margin-bottom:0; border: 2px solid rgba(255,193,69,0.5); }
+.camera-pop{
+  position:absolute;
+  top:0; left:50%;
+  transform: translateX(-50%);
+  width: 100px; height:100px;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.camera-glow{
+  position:absolute;
+  top:50%; left:50%;
+  width:110px; height:110px;
+  transform:translate(-50%,-50%);
+  background: radial-gradient(circle, rgba(255,193,69,0.65) 0%, rgba(255,193,69,0.25) 45%, transparent 72%);
+  border-radius:50%;
+  animation: glow-pulse 2.2s ease-in-out infinite;
+}
+.camera-emoji{
+  position:relative;
+  font-size: 62px;
+  line-height:1;
+  filter: drop-shadow(0 8px 10px rgba(0,0,0,0.35));
+  transform: rotate(-6deg);
+}
+.camera-sparkle{
+  position:absolute;
+  font-size: 20px;
+  animation: sparkle-twinkle 1.8s ease-in-out infinite;
+}
+.camera-sparkle-1{ top:6px; left:6px; animation-delay:0s; }
+.camera-sparkle-2{ bottom:10px; right:2px; font-size:15px; animation-delay:0.6s; }
+@keyframes glow-pulse{
+  0%,100%{ opacity:0.7; transform:translate(-50%,-50%) scale(1); }
+  50%{ opacity:1; transform:translate(-50%,-50%) scale(1.12); }
+}
+@keyframes sparkle-twinkle{
+  0%,100%{ opacity:0.3; transform:scale(0.8); }
+  50%{ opacity:1; transform:scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce){
+  .camera-glow, .camera-sparkle{ animation:none; }
+}
 
 /* ============================================================
    DISCLAIMER
