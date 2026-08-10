@@ -282,7 +282,8 @@ const progressMarkerEl = document.getElementById('progress-marker');
 const questionTextEl   = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
 const btnPrev = document.getElementById('btn-prev');
-const btnNext = document.getElementById('btn-next');
+let isTransitioning = false;
+let autoAdvanceTimeout = null;
 
 function showScreen(name){
   Object.values(screens).forEach(s => s.classList.remove('active'));
@@ -317,16 +318,21 @@ function renderQuestion(){
   });
 
   btnPrev.style.visibility = currentIndex === 0 ? 'hidden' : 'visible';
-  btnNext.disabled = answers[currentIndex] === null;
-  btnNext.textContent = currentIndex === total - 1 ? 'Scopri il mio super potere 🏆' : 'Avanti →';
 }
 
 function selectAnswer(i){
+  if (isTransitioning) return;
   answers[currentIndex] = i;
   renderQuestion();
+  isTransitioning = true;
+  autoAdvanceTimeout = setTimeout(() => {
+    isTransitioning = false;
+    nextQuestion();
+  }, 420);
 }
 
 function previousQuestion(){
+  if (autoAdvanceTimeout){ clearTimeout(autoAdvanceTimeout); isTransitioning = false; }
   if (currentIndex > 0){
     currentIndex--;
     renderQuestion();
@@ -467,6 +473,8 @@ function finishQuiz(){
 }
 
 function restartTest(){
+  if (autoAdvanceTimeout){ clearTimeout(autoAdvanceTimeout); }
+  isTransitioning = false;
   currentIndex = 0;
   answers.fill(null);
   document.getElementById('areas-detail-card').hidden = true;
@@ -561,7 +569,6 @@ document.getElementById('btn-start').addEventListener('click', () => {
   showScreen('quiz');
 });
 btnPrev.addEventListener('click', previousQuestion);
-btnNext.addEventListener('click', nextQuestion);
 document.getElementById('btn-restart').addEventListener('click', restartTest);
 document.getElementById('btn-discover-areas').addEventListener('click', function(){
   const detail = document.getElementById('areas-detail-card');
